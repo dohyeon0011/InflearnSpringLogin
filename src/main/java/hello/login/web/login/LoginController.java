@@ -129,7 +129,7 @@ public class LoginController {
         HttpSession session = request.getSession();
 
         // 세션에 로그인 회원 정보 보관
-        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);   // JSESSIONID로 개인 고유 세션 id에 값으로 멤버 객체를 넣어줌
 
         // Servlet Filter redirectURL 설정(비로그인 상태로 아이템 폼에 갔다가 로그인 폼으로 리다이렉트 당하고 로그인 하면 아이템 폼으로 가게 해주는)
         return "redirect:" + redirectURL;
