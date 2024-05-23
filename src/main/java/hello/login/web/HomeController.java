@@ -2,6 +2,7 @@ package hello.login.web;
 
 import hello.login.domain.member.Member;
 import hello.login.domain.member.MemberRepository;
+import hello.login.web.argumentresolver.Login;
 import hello.login.web.session.SessionManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -91,7 +92,7 @@ public class HomeController {
     }*/
 
 
-    // @SessionAttribute 사용 -> 세션을 생성하지는 않아서 세션을 찾아올 때만 사용
+    /*// @SessionAttribute 사용 -> 세션을 생성하지는 않아서 세션을 찾아올 때만 사용
     @GetMapping("/")
     public String homeLoginV3Spring(
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
@@ -105,9 +106,21 @@ public class HomeController {
         model.addAttribute("member", loginMember);
         return "loginHome";
     }
+*/
 
+    // @Login(커스텀 어노테이션)을 쓰면 귀찮게 @SessionAttribute로 세션 찾고 이런 귀찮은 짓 안해도 됨.
+    @GetMapping("/")
+    public String homeLoginV3ArgumentResolver(@Login Member loginMember, Model model) {
 
+        // 세션에 회원 데이터가 없으면 home
+        if (loginMember == null) {
+            return "home";
+        }
 
+        // 세션이 유지됐을 때
+        model.addAttribute("member", loginMember);
+        return "loginHome";
+    }
 
 
 
